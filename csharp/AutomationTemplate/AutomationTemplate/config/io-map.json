@@ -1,0 +1,42 @@
+{
+  "inputs": [
+    { "name": "START_BUTTON", "port": 0, "displayName": "Start Button" },
+    { "name": "STOP_BUTTON", "port": 1, "displayName": "Stop Button" },
+    { "name": "RESET_BUTTON", "port": 2, "displayName": "Reset Button" },
+    { "name": "E_STOP_BUTTON", "port": 3, "displayName": "Emergency Stop" },
+    { "name": "SPARE_4", "port": 4, "displayName": "Spare 4" },
+    { "name": "SPARE_5", "port": 5, "displayName": "Spare 5" },
+    { "name": "SPARE_6", "port": 6, "displayName": "Spare 6" },
+    { "name": "SPARE_7", "port": 7, "displayName": "Spare 7" },
+    { "name": "SPARE_8", "port": 8, "displayName": "Spare 8" },
+
+    { "name": "SIDE_CYL_FWD_SENSOR", "port": 9, "displayName": "Side Align Cylinder FWD Sensor" },
+    { "name": "SIDE_CYL_BWD_SENSOR", "port": 10, "displayName": "Side Align Cylinder BWD Sensor" },
+    { "name": "TOP_CYL_FWD_SENSOR", "port": 11, "displayName": "Top Align Cylinder FWD Sensor" },
+    { "name": "TOP_CYL_BWD_SENSOR", "port": 12, "displayName": "Top Align Cylinder BWD Sensor" },
+    { "name": "BOT_CYL_FWD_SENSOR", "port": 13, "displayName": "Bottom Align Cylinder FWD Sensor" },
+    { "name": "BOT_CYL_BWD_SENSOR", "port": 14, "displayName": "Bottom Align Cylinder BWD Sensor" },
+    { "name": "GRIPPER_FWD_SENSOR", "port": 15, "displayName": "Gripper FWD Sensor" },
+    { "name": "GRIPPER_BWD_SENSOR", "port": 16, "displayName": "Gripper BWD Sensor" }
+  ],
+  "outputs": [
+    { "name": "START_BUTTON_LED", "port": 0, "displayName": "Start Button LED" },
+    { "name": "STOP_BUTTON_LED", "port": 1, "displayName": "Stop Button LED" },
+    { "name": "RESET_BUTTON_LED", "port": 2, "displayName": "Reset Button LED" },
+    { "name": "TOWER_LAMP_RED", "port": 3, "displayName": "Tower Lamp Red" },
+    { "name": "TOWER_LAMP_YELLOW", "port": 4, "displayName": "Tower Lamp Yellow" },
+    { "name": "TOWER_LAMP_GREEN", "port": 5, "displayName": "Tower Lamp Green" },
+    { "name": "BUZZER", "port": 6, "displayName": "Buzzer" },
+    { "name": "SPARE_7", "port": 7, "displayName": "Spare 7" },
+    { "name": "SPARE_8", "port": 8, "displayName": "Spare 8" },
+
+    { "name": "SIDE_CYL_FWD_SOL", "port": 9, "displayName": "Side Align Cylinder FWD Sol" },
+    { "name": "SIDE_CYL_BWD_SOL", "port": 10, "displayName": "Side Align Cylinder BWD Sol" },
+    { "name": "TOP_CYL_FWD_SOL", "port": 11, "displayName": "Top Align Cylinder FWD Sol" },
+    { "name": "TOP_CYL_BWD_SOL", "port": 12, "displayName": "Top Align Cylinder BWD Sol" },
+    { "name": "BOT_CYL_FWD_SOL", "port": 13, "displayName": "Bottom Align Cylinder FWD Sol" },
+    { "name": "BOT_CYL_BWD_SOL", "port": 14, "displayName": "Bottom Align Cylinder BWD Sol" },
+    { "name": "GRIPPER_FWD_SOL", "port": 15, "displayName": "Gripper FWD Sol" },
+    { "name": "GRIPPER_BWD_SOL", "port": 16, "displayName": "Gripper BWD Sol" }
+  ]
+}

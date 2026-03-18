@@ -87,6 +87,8 @@
     <Compile Include="0_System\Define\DefineAxis.cs" />
     <Compile Include="0_System\Define\DefineCommunication.cs" />
     <Compile Include="0_System\Define\DefineIO.cs" />
+    <Compile Include="0_System\Config\HardwareConfigLoader.cs" />
+    <Compile Include="0_System\Config\HardwareConfigModels.cs" />
     <Compile Include="0_System\MSystem.cs" />
     <Compile Include="1_Hardware\HIAxisController.cs" />
     <Compile Include="1_Hardware\HIConveyor.cs" />
@@ -133,6 +135,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\io-map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\axis-groups.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\cylinders.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\hardware.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="5_Utility\" />

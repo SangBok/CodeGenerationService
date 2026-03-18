@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using AutomationTemplate._0_System.Config;
 using AutomationTemplate._0_System.Define;
 using AutomationTemplate._1_Hardware;
 using AutomationTemplate._1_Hardware.Mock;
@@ -45,11 +46,12 @@ namespace AutomationTemplate._0_System
                 .As<HIIoController>()
                 .SingleInstance();
 
-            foreach (var axisGroup in axes)
+            var config = HardwareConfigLoader.LoadFromConfigDirectory(AppDomain.CurrentDomain.BaseDirectory);
+
+            foreach (var axisGroup in config.AxisGroups.AxisGroups)
             {
-                foreach (var axisName in axisGroup.AxisNames)
+                foreach (var axisId in axisGroup.Axes)
                 {
-                    var axisId = Enum.GetName(typeof(AxisName), axisName);
                     builder.RegisterInstance(new MockAxisController(axisId))
                         .As<HIAxisController>()
                         .Named<HIAxisController>(axisId)
@@ -57,16 +59,21 @@ namespace AutomationTemplate._0_System
                 }
             }
 
-            foreach (var cylinder in cylinders)
+            foreach (var cylinder in config.Cylinders.Cylinders)
             {
                 var cylinderId = cylinder.Name;
+                var onSensorPort = config.ResolveInputPort(cylinder.OnSensor);
+                var offSensorPort = config.ResolveInputPort(cylinder.OffSensor);
+                var onSolPort = config.ResolveOutputPort(cylinder.OnSol);
+                var offSolPort = config.ResolveOutputPort(cylinder.OffSol);
+
                 builder.Register(ctx =>
                     new MockCylinder(
                         ctx.Resolve<HIIoController>(),
-                        cylinder.OnSensor,
-                        cylinder.OffSensor,
-                        cylinder.OnSol,
-                        cylinder.OffSol))
+                        onSensorPort,
+                        offSensorPort,
+                        onSolPort,
+                        offSolPort))
                     .As<HICylinder>()
                     .Named<HICylinder>(cylinderId)
                     .SingleInstance();
@@ -74,20 +81,20 @@ namespace AutomationTemplate._0_System
 
             builder.Register(ctx =>
                 new MHandler(
-                    ctx.ResolveNamed<HIAxisController>(Enum.GetName(typeof(AxisName), AxisName.HandlerX)),
-                    ctx.ResolveNamed<HIAxisController>(Enum.GetName(typeof(AxisName), AxisName.HandlerY)),
-                    ctx.ResolveNamed<HIAxisController>(Enum.GetName(typeof(AxisName), AxisName.HandlerZ)),
-                    ctx.ResolveNamed<HICylinder>(Enum.GetName(typeof(CylinderName), CylinderName.Gripper))))
+                    ctx.ResolveNamed<HIAxisController>("HandlerX"),
+                    ctx.ResolveNamed<HIAxisController>("HandlerY"),
+                    ctx.ResolveNamed<HIAxisController>("HandlerZ"),
+                    ctx.ResolveNamed<HICylinder>("Gripper")))
                 .AsSelf()
                 .SingleInstance();
 
             builder.Register(ctx =>
                 new MStage(
-                    ctx.ResolveNamed<HIAxisController>(Enum.GetName(typeof(AxisName), AxisName.StageX)),
-                    ctx.ResolveNamed<HIAxisController>(Enum.GetName(typeof(AxisName), AxisName.StageY)),
-                    ctx.ResolveNamed<HICylinder>(Enum.GetName(typeof(CylinderName), CylinderName.SideAlignCylinder)),
-                    ctx.ResolveNamed<HICylinder>(Enum.GetName(typeof(CylinderName), CylinderName.TopAlignCylinder)),
-                    ctx.ResolveNamed<HICylinder>(Enum.GetName(typeof(CylinderName), CylinderName.BotAlignCylinder))))
+                    ctx.ResolveNamed<HIAxisController>("StageX"),
+                    ctx.ResolveNamed<HIAxisController>("StageY"),
+                    ctx.ResolveNamed<HICylinder>("SideAlignCylinder"),
+                    ctx.ResolveNamed<HICylinder>("TopAlignCylinder"),
+                    ctx.ResolveNamed<HICylinder>("BotAlignCylinder")))
                 .AsSelf()
                 .SingleInstance();
 

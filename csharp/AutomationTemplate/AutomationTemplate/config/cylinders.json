@@ -1,0 +1,32 @@
+{
+  "cylinders": [
+    {
+      "name": "SideAlignCylinder",
+      "onSensor": "SIDE_CYL_FWD_SENSOR",
+      "offSensor": "SIDE_CYL_BWD_SENSOR",
+      "onSol": "SIDE_CYL_FWD_SOL",
+      "offSol": "SIDE_CYL_BWD_SOL"
+    },
+    {
+      "name": "TopAlignCylinder",
+      "onSensor": "TOP_CYL_FWD_SENSOR",
+      "offSensor": "TOP_CYL_BWD_SENSOR",
+      "onSol": "TOP_CYL_FWD_SOL",
+      "offSol": "TOP_CYL_BWD_SOL"
+    },
+    {
+      "name": "BotAlignCylinder",
+      "onSensor": "BOT_CYL_FWD_SENSOR",
+      "offSensor": "BOT_CYL_BWD_SENSOR",
+      "onSol": "BOT_CYL_FWD_SOL",
+      "offSol": "BOT_CYL_BWD_SOL"
+    },
+    {
+      "name": "Gripper",
+      "onSensor": "GRIPPER_FWD_SENSOR",
+      "offSensor": "GRIPPER_BWD_SENSOR",
+      "onSol": "GRIPPER_FWD_SOL",
+      "offSol": "GRIPPER_BWD_SOL"
+    }
+  ]
+}

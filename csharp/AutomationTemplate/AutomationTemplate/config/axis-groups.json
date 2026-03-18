@@ -1,0 +1,7 @@
+{
+  "axisGroups": [
+    { "groupName": "HandlerXY", "axes": [ "HandlerX", "HandlerY" ] },
+    { "groupName": "HandlerZ", "axes": [ "HandlerZ" ] },
+    { "groupName": "StageXY", "axes": [ "StageX", "StageY" ] }
+  ]
+}
