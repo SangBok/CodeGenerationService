@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutomationTemplate._1_Hardware
 {
-    public interface IAxisController
+    public interface HIAxisController
     {
         string AxisId { get; }
 

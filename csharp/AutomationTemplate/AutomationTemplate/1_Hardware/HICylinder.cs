@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutomationTemplate._1_Hardware
 {
-    public interface ICylinder
+    public interface HICylinder
     {
         int Forward(bool isAsync = true);
         int Backward(bool isAsync = true);

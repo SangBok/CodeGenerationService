@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutomationTemplate._1_Hardware
 {
-    public interface IIoController
+    public interface HIIoController
     {
         //input check
         bool IsInputOn(int port);

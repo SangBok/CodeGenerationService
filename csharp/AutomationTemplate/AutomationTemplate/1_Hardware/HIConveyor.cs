@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutomationTemplate._1_Hardware
 {
-    public interface IConveyor
+    public interface HIConveyor
     {
 
         int Stop();

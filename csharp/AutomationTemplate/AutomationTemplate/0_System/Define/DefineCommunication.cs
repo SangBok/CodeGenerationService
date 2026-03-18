@@ -15,7 +15,6 @@ namespace AutomationTemplate._0_System.Define
             Tcpip_Server,
             Tcpip_Client,
             Http,
-
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +26,9 @@ namespace AutomationTemplate._0_System.Define
             TOP_CYL_BWD_SENSOR = 12,
             BOT_CYL_FWD_SENSOR = 13,
             BOT_CYL_BWD_SENSOR = 14,
+
+            GRIPPER_FWD_SENSOR = 15,
+            GRIPPER_BWD_SENSOR = 16,
         }
 
         public enum OUT_MAP
@@ -46,6 +49,9 @@ namespace AutomationTemplate._0_System.Define
             TOP_CYL_BWD_SOL = 12,
             BOT_CYL_FWD_SOL = 13,
             BOT_CYL_BWD_SOL = 14,
+
+            GRIPPER_FWD_SOL = 15,
+            GRIPPER_BWD_SOL = 16,
 
         }
     }
