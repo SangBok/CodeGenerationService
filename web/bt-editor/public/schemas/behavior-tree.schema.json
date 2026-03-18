@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codeservice.local/schemas/behavior-tree.schema.json",
+  "title": "BehaviorTreeDefinition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "treeId", "version", "rootNodeId", "nodes"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Schema version for forward/backward compatibility.",
+      "pattern": "^1\\.0\\.\\d+$",
+      "examples": ["1.0.0"]
+    },
+    "treeId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "rootNodeId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "blackboardSchema": {
+      "type": "array",
+      "description": "Optional typed blackboard key declarations (used by editor validation and runtime defaults).",
+      "items": { "$ref": "#/$defs/blackboardKey" }
+    },
+    "bindings": {
+      "type": "object",
+      "description": "Optional mapping from logical unit names to hardware/config identifiers.",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": {
+          "type": "string",
+          "description": "Node type identifier. Engine uses this to resolve node factories.",
+          "minLength": 1
+        },
+        "name": { "type": "string" },
+        "children": {
+          "type": "array",
+          "description": "Child node ids (for composite nodes).",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Typed parameter values. The editor should validate against node definitions.",
+          "additionalProperties": { "$ref": "#/$defs/value" }
+        },
+        "guard": {
+          "description": "Optional condition node that must succeed before this node runs.",
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string", "minLength": 1 }
+          ]
+        }
+      }
+    },
+    "blackboardKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "valueType"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "valueType": { "$ref": "#/$defs/valueType" },
+        "description": { "type": "string" },
+        "defaultValue": { "$ref": "#/$defs/value" }
+      }
+    },
+    "valueType": {
+      "type": "string",
+      "enum": ["bool", "int", "double", "string", "enum", "ref"]
+    },
+    "value": {
+      "description": "Parameter values; refs are expressed as {\"$ref\":\"blackboardKey\"} objects.",
+      "anyOf": [
+        { "type": "boolean" },
+        { "type": "integer" },
+        { "type": "number" },
+        { "type": "string" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["$ref"],
+          "properties": {
+            "$ref": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    }
+  }
+}

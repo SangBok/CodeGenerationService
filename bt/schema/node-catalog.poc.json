@@ -1,0 +1,100 @@
+{
+  "catalogVersion": "1.0.0",
+  "nodes": [
+    {
+      "type": "Sequence",
+      "category": "Composite",
+      "description": "Runs children in order until one fails or runs.",
+      "ports": { "minChildren": 1 }
+    },
+    {
+      "type": "Selector",
+      "category": "Composite",
+      "description": "Runs children in order until one succeeds or runs.",
+      "ports": { "minChildren": 1 }
+    },
+    {
+      "type": "Decorator.Timeout",
+      "category": "Decorator",
+      "description": "Fails if child does not complete within timeoutMs.",
+      "ports": { "exactChildren": 1 },
+      "parameters": {
+        "timeoutMs": { "valueType": "int", "required": true, "min": 1 }
+      }
+    },
+    {
+      "type": "Action.Delay",
+      "category": "Action",
+      "description": "Waits for delayMs then succeeds.",
+      "parameters": {
+        "delayMs": { "valueType": "int", "required": true, "min": 0 }
+      }
+    },
+    {
+      "type": "Condition.AlwaysTrue",
+      "category": "Condition",
+      "description": "Always succeeds."
+    },
+    {
+      "type": "Condition.AlwaysFalse",
+      "category": "Condition",
+      "description": "Always fails."
+    },
+    {
+      "type": "Unit.AxisMoveAbsolute",
+      "category": "UnitAction",
+      "description": "Calls unit axis move to a position index (or absolute value in later versions).",
+      "parameters": {
+        "unit": { "valueType": "string", "required": true },
+        "axis": { "valueType": "enum", "required": true, "enumValues": ["X", "Y", "Z"] },
+        "positionIdx": { "valueType": "int", "required": true, "min": 0 }
+      }
+    },
+    {
+      "type": "Unit.MoveXYToPosition",
+      "category": "UnitAction",
+      "description": "Calls unit XY move based on positionIdx.",
+      "parameters": {
+        "unit": { "valueType": "string", "required": true },
+        "positionIdx": { "valueType": "int", "required": true, "min": 0 }
+      }
+    },
+    {
+      "type": "Unit.CylinderForward",
+      "category": "UnitAction",
+      "description": "Extends a cylinder (e.g., gripper forward).",
+      "parameters": {
+        "unit": { "valueType": "string", "required": true },
+        "cylinder": { "valueType": "string", "required": true }
+      }
+    },
+    {
+      "type": "Unit.CylinderBackward",
+      "category": "UnitAction",
+      "description": "Retracts a cylinder (e.g., gripper backward).",
+      "parameters": {
+        "unit": { "valueType": "string", "required": true },
+        "cylinder": { "valueType": "string", "required": true }
+      }
+    },
+    {
+      "type": "IO.SetOutput",
+      "category": "Action",
+      "description": "Sets a digital output channel to a boolean value.",
+      "parameters": {
+        "channel": { "valueType": "string", "required": true },
+        "value": { "valueType": "bool", "required": true }
+      }
+    },
+    {
+      "type": "IO.WaitInput",
+      "category": "Condition",
+      "description": "Waits until a digital input matches expected value or times out.",
+      "parameters": {
+        "channel": { "valueType": "string", "required": true },
+        "expected": { "valueType": "bool", "required": true },
+        "timeoutMs": { "valueType": "int", "required": false, "min": 0 }
+      }
+    }
+  ]
+}

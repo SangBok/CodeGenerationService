@@ -72,3 +72,12 @@ $RECYCLE.BIN/
 *.bak
 *.swp
 *.tmp
+
+# Node / Vite
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
