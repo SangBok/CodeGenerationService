@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "treeId": "MoveSafePos_LegacyWinForms",
+  "version": 1,
+  "name": "MoveSafePos",
+  "description": "Legacy WinForms PoC: Z->XY->Z using MHandler",
+  "rootNodeId": "root_seq",
+  "blackboardSchema": [
+    {
+      "key": "positionIdx",
+      "valueType": "int",
+      "description": "Target position index for XY and Z.",
+      "defaultValue": 1
+    }
+  ],
+  "nodes": [
+    {
+      "id": "root_seq",
+      "type": "Sequence",
+      "name": "MoveSafePos",
+      "children": ["move_z_safe", "move_xy", "move_z_target"]
+    },
+    {
+      "id": "move_z_safe",
+      "type": "Unit.AxisMoveAbsolute",
+      "name": "Move Z to safe",
+      "parameters": {
+        "unit": "StageHandler",
+        "axis": "Z",
+        "positionIdx": 0
+      }
+    },
+    {
+      "id": "move_xy",
+      "type": "Unit.MoveXYToPosition",
+      "name": "Move XY",
+      "parameters": {
+        "unit": "StageHandler",
+        "positionIdx": { "$ref": "positionIdx" }
+      }
+    },
+    {
+      "id": "move_z_target",
+      "type": "Unit.AxisMoveAbsolute",
+      "name": "Move Z to target",
+      "parameters": {
+        "unit": "StageHandler",
+        "axis": "Z",
+        "positionIdx": { "$ref": "positionIdx" }
+      }
+    }
+  ]
+}

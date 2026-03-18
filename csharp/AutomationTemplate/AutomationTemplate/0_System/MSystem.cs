@@ -126,5 +126,10 @@ namespace AutomationTemplate._0_System
             //PStage 생성
             return 0;
         }
+
+        public T Resolve<T>()
+        {
+            return container.Resolve<T>();
+        }
     }
 }

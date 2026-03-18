@@ -102,6 +102,17 @@
     <Compile Include="3_Control\CHandler.cs" />
     <Compile Include="4_Process\PHandler.cs" />
     <Compile Include="4_Process\PStage.cs" />
+    <Compile Include="5_Utility\BtRuntime\BtTypes.cs" />
+    <Compile Include="5_Utility\BtRuntime\BtDefinition.cs" />
+    <Compile Include="5_Utility\BtRuntime\BtBlackboard.cs" />
+    <Compile Include="5_Utility\BtRuntime\BtContext.cs" />
+    <Compile Include="5_Utility\BtRuntime\LegacyUnitRegistry.cs" />
+    <Compile Include="5_Utility\BtRuntime\BehaviorTree.cs" />
+    <Compile Include="5_Utility\BtRuntime\Nodes\INode.cs" />
+    <Compile Include="5_Utility\BtRuntime\Nodes\CompositeNodes.cs" />
+    <Compile Include="5_Utility\BtRuntime\Nodes\DecoratorNodes.cs" />
+    <Compile Include="5_Utility\BtRuntime\Nodes\PrimitiveNodes.cs" />
+    <Compile Include="5_Utility\BtRuntime\Nodes\LegacyUnitNodes.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +158,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="config\hardware.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\bt-tree.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
