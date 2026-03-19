@@ -1,17 +1,14 @@
 using AutomationTemplate._1_Hardware;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using AutomationTemplate._5_Utility.BtRuntime;
 
-namespace AutomationTemplate._2_Mechanical
+namespace TestBed._2_Mechanical
 {
-    public class MHandler
+    public class MHandler : IUnitMotion
     {
-        private HIAxisController handlerX, handlerY, handlerZ;
-        private HICylinder gripper;
+        private readonly HIAxisController handlerX;
+        private readonly HIAxisController handlerY;
+        private readonly HIAxisController handlerZ;
+        private readonly HICylinder gripper;
 
         public MHandler(HIAxisController handlerX, HIAxisController handlerY, HIAxisController handlerZ, HICylinder gripper)
         {

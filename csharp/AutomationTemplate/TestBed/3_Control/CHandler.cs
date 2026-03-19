@@ -1,15 +1,10 @@
-using AutomationTemplate._2_Mechanical;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TestBed._2_Mechanical;
 
-namespace AutomationTemplate._3_Control
+namespace TestBed._3_Control
 {
     public class CHandler
     {
-        private MHandler mHandler;
+        private readonly MHandler mHandler;
 
         public CHandler(MHandler mHandler)
         {

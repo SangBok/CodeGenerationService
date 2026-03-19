@@ -1,13 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using AutomationTemplate._2_Mechanical;
 using Newtonsoft.Json.Linq;
 
 namespace AutomationTemplate._5_Utility.BtRuntime.Nodes
 {
-    internal sealed class HandlerAxisMoveAbsoluteNode : INode
+    internal sealed class UnitAxisMoveAbsoluteNode : INode
     {
-        public HandlerAxisMoveAbsoluteNode(string id, string name, string unitName, string axis, JToken positionIdxToken)
+        public UnitAxisMoveAbsoluteNode(string id, string name, string unitName, string axis, JToken positionIdxToken)
         {
             Id = id;
             Name = name;
@@ -27,16 +26,15 @@ namespace AutomationTemplate._5_Utility.BtRuntime.Nodes
         {
             context.Emit(Id, Name, Type, "tickStart");
             var unitObj = context.UnitRegistry.ResolveUnit(unitName);
-            var handler = unitObj as MHandler;
-            if (handler == null)
-                throw new InvalidOperationException("Unit '" + unitName + "' is not MHandler (legacy handler).");
+            var unitMotion = unitObj as IUnitMotion;
+            if (unitMotion == null)
+                throw new InvalidOperationException("Unit '" + unitName + "' is not IUnitMotion.");
 
             var positionIdx = BtJson.ResolveInt(positionIdxToken, context.Blackboard);
 
-            // Legacy MHandler supports MovePositionZ and MovePositionXY
             if (string.Equals(axis, "Z", StringComparison.OrdinalIgnoreCase))
             {
-                handler.MovePositionZ(positionIdx);
+                unitMotion.MovePositionZ(positionIdx);
                 context.Emit(Id, Name, Type, "tickResult", BtNodeStatus.Success);
                 return Task.FromResult(BtNodeStatus.Success);
             }
@@ -45,9 +43,9 @@ namespace AutomationTemplate._5_Utility.BtRuntime.Nodes
         }
     }
 
-    internal sealed class HandlerMoveXYToPositionNode : INode
+    internal sealed class UnitMoveXYToPositionNode : INode
     {
-        public HandlerMoveXYToPositionNode(string id, string name, string unitName, JToken positionIdxToken)
+        public UnitMoveXYToPositionNode(string id, string name, string unitName, JToken positionIdxToken)
         {
             Id = id;
             Name = name;
@@ -65,20 +63,20 @@ namespace AutomationTemplate._5_Utility.BtRuntime.Nodes
         {
             context.Emit(Id, Name, Type, "tickStart");
             var unitObj = context.UnitRegistry.ResolveUnit(unitName);
-            var handler = unitObj as MHandler;
-            if (handler == null)
-                throw new InvalidOperationException("Unit '" + unitName + "' is not MHandler (legacy handler).");
+            var unitMotion = unitObj as IUnitMotion;
+            if (unitMotion == null)
+                throw new InvalidOperationException("Unit '" + unitName + "' is not IUnitMotion.");
 
             var positionIdx = BtJson.ResolveInt(positionIdxToken, context.Blackboard);
-            handler.MovePositionXY(positionIdx);
+            unitMotion.MovePositionXY(positionIdx);
             context.Emit(Id, Name, Type, "tickResult", BtNodeStatus.Success);
             return Task.FromResult(BtNodeStatus.Success);
         }
     }
 
-    internal sealed class HandlerCylinderForwardNode : INode
+    internal sealed class UnitCylinderForwardNode : INode
     {
-        public HandlerCylinderForwardNode(string id, string name, string unitName, JToken cylinderToken)
+        public UnitCylinderForwardNode(string id, string name, string unitName, JToken cylinderToken)
         {
             Id = id;
             Name = name;
@@ -98,23 +96,23 @@ namespace AutomationTemplate._5_Utility.BtRuntime.Nodes
             context.Emit(Id, Name, Type, "tickStart");
 
             var unitObj = context.UnitRegistry.ResolveUnit(unitName);
-            var handler = unitObj as MHandler;
-            if (handler == null)
-                throw new InvalidOperationException("Unit '" + unitName + "' is not MHandler (legacy handler).");
+            var unitMotion = unitObj as IUnitMotion;
+            if (unitMotion == null)
+                throw new InvalidOperationException("Unit '" + unitName + "' is not IUnitMotion.");
 
             var cylinderName = BtJson.ResolveString(cylinderToken, context.Blackboard);
             if (!string.Equals(cylinderName, "Gripper", StringComparison.OrdinalIgnoreCase))
                 throw new NotSupportedException("Legacy handler cylinder forward supports only cylinder=Gripper.");
 
-            handler.MaterialGrip();
+            unitMotion.MaterialGrip();
             context.Emit(Id, Name, Type, "tickResult", BtNodeStatus.Success);
             return Task.FromResult(BtNodeStatus.Success);
         }
     }
 
-    internal sealed class HandlerCylinderBackwardNode : INode
+    internal sealed class UnitCylinderBackwardNode : INode
     {
-        public HandlerCylinderBackwardNode(string id, string name, string unitName, JToken cylinderToken)
+        public UnitCylinderBackwardNode(string id, string name, string unitName, JToken cylinderToken)
         {
             Id = id;
             Name = name;
@@ -134,15 +132,15 @@ namespace AutomationTemplate._5_Utility.BtRuntime.Nodes
             context.Emit(Id, Name, Type, "tickStart");
 
             var unitObj = context.UnitRegistry.ResolveUnit(unitName);
-            var handler = unitObj as MHandler;
-            if (handler == null)
-                throw new InvalidOperationException("Unit '" + unitName + "' is not MHandler (legacy handler).");
+            var unitMotion = unitObj as IUnitMotion;
+            if (unitMotion == null)
+                throw new InvalidOperationException("Unit '" + unitName + "' is not IUnitMotion.");
 
             var cylinderName = BtJson.ResolveString(cylinderToken, context.Blackboard);
             if (!string.Equals(cylinderName, "Gripper", StringComparison.OrdinalIgnoreCase))
                 throw new NotSupportedException("Legacy handler cylinder backward supports only cylinder=Gripper.");
 
-            handler.MaterialUngrip();
+            unitMotion.MaterialUngrip();
             context.Emit(Id, Name, Type, "tickResult", BtNodeStatus.Success);
             return Task.FromResult(BtNodeStatus.Success);
         }

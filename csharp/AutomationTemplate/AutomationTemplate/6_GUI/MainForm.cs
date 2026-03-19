@@ -1,4 +1,5 @@
 using AutomationTemplate._0_System;
+using AutomationTemplate._0_System.Config;
 using AutomationTemplate._1_Hardware;
 using AutomationTemplate._5_Utility.BtRuntime;
 using System;
@@ -30,13 +31,8 @@ namespace AutomationTemplate
             MSystem.GetInstance().Initialize();
             AppendLog("System initialized.");
 
-            // Subscribe to legacy Mock axis move events so we can show movement timeline in UI logs.
-            // (PoC uses MockAxisController which implements IAxisMoveNotifier.)
-            SubscribeAxisMoveEvents("HandlerX");
-            SubscribeAxisMoveEvents("HandlerY");
-            SubscribeAxisMoveEvents("HandlerZ");
-            SubscribeAxisMoveEvents("StageX");
-            SubscribeAxisMoveEvents("StageY");
+            foreach (var axisId in GetAxisIdsFromConfig())
+                SubscribeAxisMoveEvents(axisId);
 
             // default BT path suggestion (user can load another file)
             var defaultPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "bt-tree.json");
@@ -107,7 +103,7 @@ namespace AutomationTemplate
 
             var context = new BtContext(
                 blackboard: new BtBlackboard(),
-                unitRegistry: new LegacyUnitRegistry(),
+                unitRegistry: new ContainerUnitRegistry(),
                 cancellationToken: btCts.Token);
 
             context.Trace += (s, ev) =>
@@ -115,9 +111,6 @@ namespace AutomationTemplate
                 if (ev.EventType.StartsWith("tick") || ev.EventType == "timeout")
                     AppendLog($"[{ev.TimestampUtc:O}] {ev.EventType} node={ev.NodeId} name={ev.NodeName} type={ev.NodeType} status={ev.Status}");
             };
-
-            // PoC default value if not provided by schema
-            context.Blackboard.Set("positionIdx", 2);
 
             Task.Run(async () =>
             {
@@ -209,6 +202,25 @@ namespace AutomationTemplate
                 BeginInvoke(action);
             else
                 action();
+        }
+
+        private IEnumerable<string> GetAxisIdsFromConfig()
+        {
+            try
+            {
+                var config = HardwareConfigLoader.LoadFromConfigDirectory(AppDomain.CurrentDomain.BaseDirectory);
+                return config.AxisGroups.AxisGroups
+                    .Where(g => g != null && g.Axes != null)
+                    .SelectMany(g => g.Axes)
+                    .Where(a => !string.IsNullOrWhiteSpace(a))
+                    .Distinct(StringComparer.Ordinal)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                AppendLog("Failed to load axis list from config: " + ex.Message);
+                return Array.Empty<string>();
+            }
         }
     }
 }

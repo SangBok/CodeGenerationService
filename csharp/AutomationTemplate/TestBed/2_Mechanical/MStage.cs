@@ -1,16 +1,14 @@
 using AutomationTemplate._1_Hardware;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AutomationTemplate._2_Mechanical
+namespace TestBed._2_Mechanical
 {
     public class MStage
     {
-        private HIAxisController stageX, stageY;
-        private HICylinder sideClamp, topClamp, botClamp;
+        private readonly HIAxisController stageX;
+        private readonly HIAxisController stageY;
+        private readonly HICylinder sideClamp;
+        private readonly HICylinder topClamp;
+        private readonly HICylinder botClamp;
 
         public MStage(HIAxisController stageX, HIAxisController stageY, HICylinder sideClamp, HICylinder topClamp, HICylinder botClamp)
         {

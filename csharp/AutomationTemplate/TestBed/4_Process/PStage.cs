@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutomationTemplate._4_Process
+namespace TestBed._4_Process
 {
     public class PStage
     {
@@ -23,7 +17,6 @@ namespace AutomationTemplate._4_Process
 
         public void Run()
         {
-
             switch (currentStep)
             {
                 case StageStep.CHECK_INIT:

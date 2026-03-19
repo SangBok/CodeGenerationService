@@ -1,0 +1,25 @@
+{
+  "handlerAxes": {
+    "x": "HandlerX",
+    "y": "HandlerY",
+    "z": "HandlerZ"
+  },
+  "stageAxes": {
+    "x": "StageX",
+    "y": "StageY"
+  },
+  "cylinders": {
+    "gripper": "Gripper",
+    "sideAlign": "SideAlignCylinder",
+    "topAlign": "TopAlignCylinder",
+    "bottomAlign": "BotAlignCylinder"
+  },
+  "unitAliases": [
+    "StageHandler",
+    "Handler",
+    "MHandler"
+  ],
+  "ui": {
+    "safePositionIndex": 2
+  }
+}

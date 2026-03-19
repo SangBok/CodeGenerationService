@@ -64,9 +64,8 @@ namespace AutomationTemplate._5_Utility.BtRuntime
                         node = new AlwaysFalseNode(def.Id, def.Name ?? def.Id);
                         break;
 
-                    // Legacy handler unit actions (MHandler)
                     case "Unit.AxisMoveAbsolute":
-                        node = new HandlerAxisMoveAbsoluteNode(
+                        node = new UnitAxisMoveAbsoluteNode(
                             def.Id,
                             def.Name ?? def.Id,
                             GetRequiredString(def, "unit"),
@@ -74,21 +73,21 @@ namespace AutomationTemplate._5_Utility.BtRuntime
                             GetRequiredToken(def, "positionIdx"));
                         break;
                     case "Unit.MoveXYToPosition":
-                        node = new HandlerMoveXYToPositionNode(
+                        node = new UnitMoveXYToPositionNode(
                             def.Id,
                             def.Name ?? def.Id,
                             GetRequiredString(def, "unit"),
                             GetRequiredToken(def, "positionIdx"));
                         break;
                     case "Unit.CylinderForward":
-                        node = new HandlerCylinderForwardNode(
+                        node = new UnitCylinderForwardNode(
                             def.Id,
                             def.Name ?? def.Id,
                             GetRequiredString(def, "unit"),
                             GetRequiredToken(def, "cylinder"));
                         break;
                     case "Unit.CylinderBackward":
-                        node = new HandlerCylinderBackwardNode(
+                        node = new UnitCylinderBackwardNode(
                             def.Id,
                             def.Name ?? def.Id,
                             GetRequiredString(def, "unit"),
