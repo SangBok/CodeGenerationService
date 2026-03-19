@@ -1,4 +1,5 @@
 using AutomationTemplate._0_System;
+using AutomationTemplate._1_Hardware;
 using AutomationTemplate._5_Utility.BtRuntime;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,47 @@ namespace AutomationTemplate
             MSystem.GetInstance().Initialize();
             AppendLog("System initialized.");
 
+            // Subscribe to legacy Mock axis move events so we can show movement timeline in UI logs.
+            // (PoC uses MockAxisController which implements IAxisMoveNotifier.)
+            SubscribeAxisMoveEvents("HandlerX");
+            SubscribeAxisMoveEvents("HandlerY");
+            SubscribeAxisMoveEvents("HandlerZ");
+            SubscribeAxisMoveEvents("StageX");
+            SubscribeAxisMoveEvents("StageY");
+
             // default BT path suggestion (user can load another file)
             var defaultPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "bt-tree.json");
             if (File.Exists(defaultPath))
                 txtBtPath.Text = defaultPath;
             UpdateStatus("Idle");
 
+        }
+
+        private void SubscribeAxisMoveEvents(string axisId)
+        {
+            try
+            {
+                var axis = MSystem.GetInstance().ResolveAxis(axisId);
+                var notifier = axis as IAxisMoveNotifier;
+                if (notifier == null) return;
+
+                notifier.MoveAbsoluteStarted += Axis_MoveAbsoluteStarted;
+                notifier.MoveAbsoluteCompleted += Axis_MoveAbsoluteCompleted;
+            }
+            catch (Exception ex)
+            {
+                AppendLog($"Axis subscription failed axis={axisId} err={ex.Message}");
+            }
+        }
+
+        private void Axis_MoveAbsoluteStarted(object sender, AxisMoveEventArgs e)
+        {
+            AppendLog($"[Axis] MoveAbsolute START axis={e.AxisId} pos={e.Position}");
+        }
+
+        private void Axis_MoveAbsoluteCompleted(object sender, AxisMoveEventArgs e)
+        {
+            AppendLog($"[Axis] MoveAbsolute DONE axis={e.AxisId} pos={e.Position}");
         }
 
         private void btnLoadBt_Click(object sender, EventArgs e)

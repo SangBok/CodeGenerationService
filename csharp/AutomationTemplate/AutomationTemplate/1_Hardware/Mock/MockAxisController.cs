@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
 
 namespace AutomationTemplate._1_Hardware.Mock
 {
-    public sealed class MockAxisController : HIAxisController
+    public sealed class MockAxisController : HIAxisController, IAxisMoveNotifier
     {
         private readonly object gate = new object();
         private bool servoOn;
@@ -61,9 +62,17 @@ namespace AutomationTemplate._1_Hardware.Mock
             lock (gate) return !movingHome;
         }
 
+        public event EventHandler<AxisMoveEventArgs> MoveAbsoluteStarted;
+        public event EventHandler<AxisMoveEventArgs> MoveAbsoluteCompleted;
+
         public int MoveAbsolute(double position)
         {
+            //움직인다는 이벤트 발생 -> UI에서 이벤트 받아서 로그 추가
             lock (gate) actualPosition = position;
+            MoveAbsoluteStarted?.Invoke(this, new AxisMoveEventArgs(AxisId, position));
+            Thread.Sleep(100);
+            //도착했다는 이벤트 발생 -> UI에서 이벤트 받아서 로그 추가
+            MoveAbsoluteCompleted?.Invoke(this, new AxisMoveEventArgs(AxisId, position));
             return 0;
         }
 

@@ -131,5 +131,12 @@ namespace AutomationTemplate._0_System
         {
             return container.Resolve<T>();
         }
+
+        public HIAxisController ResolveAxis(string axisId)
+        {
+            if (string.IsNullOrWhiteSpace(axisId))
+                throw new ArgumentException("axisId is required", nameof(axisId));
+            return container.ResolveNamed<HIAxisController>(axisId);
+        }
     }
 }
