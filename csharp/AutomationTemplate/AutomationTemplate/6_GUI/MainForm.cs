@@ -14,12 +14,12 @@ using System.IO;
 
 namespace AutomationTemplate
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private CancellationTokenSource btCts;
         private BehaviorTree currentTree;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -76,8 +76,8 @@ namespace AutomationTemplate
 
             context.Trace += (s, ev) =>
             {
-                if (ev.EventType == "tickResult" || ev.EventType == "timeout")
-                    AppendLog($"[{ev.TimestampUtc:O}] {ev.EventType} node={ev.NodeId} type={ev.NodeType} status={ev.Status}");
+                if (ev.EventType.StartsWith("tick") || ev.EventType == "timeout")
+                    AppendLog($"[{ev.TimestampUtc:O}] {ev.EventType} node={ev.NodeId} name={ev.NodeName} type={ev.NodeType} status={ev.Status}");
             };
 
             // PoC default value if not provided by schema

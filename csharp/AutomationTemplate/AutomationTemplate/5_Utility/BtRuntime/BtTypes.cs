@@ -11,10 +11,11 @@ namespace AutomationTemplate._5_Utility.BtRuntime
 
     public sealed class BtTraceEventArgs : EventArgs
     {
-        public BtTraceEventArgs(DateTime timestampUtc, string nodeId, string nodeType, string eventType, BtNodeStatus? status, string message)
+        public BtTraceEventArgs(DateTime timestampUtc, string nodeId, string nodeName, string nodeType, string eventType, BtNodeStatus? status, string message)
         {
             TimestampUtc = timestampUtc;
             NodeId = nodeId;
+            NodeName = nodeName;
             NodeType = nodeType;
             EventType = eventType;
             Status = status;
@@ -23,6 +24,7 @@ namespace AutomationTemplate._5_Utility.BtRuntime
 
         public DateTime TimestampUtc { get; }
         public string NodeId { get; }
+        public string NodeName { get; }
         public string NodeType { get; }
         public string EventType { get; }
         public BtNodeStatus? Status { get; }

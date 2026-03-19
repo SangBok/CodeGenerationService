@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.0.3.330701\build\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.props" Condition="Exists('..\packages\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.0.3.330701\build\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -113,16 +113,16 @@
     <Compile Include="5_Utility\BtRuntime\Nodes\DecoratorNodes.cs" />
     <Compile Include="5_Utility\BtRuntime\Nodes\PrimitiveNodes.cs" />
     <Compile Include="5_Utility\BtRuntime\Nodes\LegacyUnitNodes.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="6_GUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="6_GUI\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="6_GUI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -164,10 +164,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="5_Utility\" />
-    <Folder Include="6_GUI\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.0.3.330701\analyzers\dotnet\cs\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.Common.dll" />
     <Analyzer Include="..\packages\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.0.3.330701\analyzers\dotnet\cs\Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers.dll" />

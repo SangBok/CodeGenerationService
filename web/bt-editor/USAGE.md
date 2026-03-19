@@ -45,6 +45,12 @@ npm run dev
   - Export 결과는 `public/schemas/behavior-tree.schema.json`로 검증됩니다.
 - 오른쪽 텍스트 박스에 BT JSON을 붙여넣고 **Import**를 클릭하면 다시 캔버스에 로드됩니다.
 
+## 개발자용: 새 노드 추가
+
+런타임(레거시 WinForms .NET Framework)과 웹 편집기 팔레트(Node Catalog)를 함께 확장해야 합니다.
+
+- `docs/06-BT-노드-추가-가이드.md` 참고
+
 ## 사용법 예시: Handler 유닛으로 `MoveSafePos` 만들기
 
 레거시 템플릿에서 `CHandler.MoveSafePos()`는 대략 아래 순서였습니다.
@@ -73,11 +79,13 @@ PoC에서는 유닛을 “객체로 추가”하기보다, **노드 파라미터
 
 ### C) 트리 구성(노드 추가/연결)
 
-1. `Sequence` 노드를 1개 추가하고 이름을 `MoveSafePos`로 변경합니다. (이 노드가 루트가 되도록 배치)\n+2. 아래 액션 노드 3개를 추가합니다.
+1. `Sequence` 노드를 1개 추가하고 이름을 `MoveSafePos`로 변경합니다. (이 노드가 루트가 되도록 배치)
+2. 아래 액션 노드 3개를 추가합니다.
    - `Unit.AxisMoveAbsolute` (Z safe)
    - `Unit.MoveXYToPosition` (XY)
    - `Unit.AxisMoveAbsolute` (Z target)
-3. `Sequence` → (Z safe) → (XY) → (Z target) 순서로 엣지를 연결합니다.\n+   - 자식 실행 순서는 캔버스에서 **위치(Y)** 기준으로 정렬되어 Export됩니다.
+3. `Sequence` → (Z safe) → (XY) → (Z target) 순서로 엣지를 연결합니다.
+   - 자식 실행 순서는 캔버스에서 **위치(Y)** 기준으로 정렬되어 Export됩니다.
 
 ### D) 각 노드 파라미터 입력(Inspector)
 

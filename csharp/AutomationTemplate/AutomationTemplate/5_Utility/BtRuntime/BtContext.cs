@@ -27,9 +27,9 @@ namespace AutomationTemplate._5_Utility.BtRuntime
             return (TState)NodeState.GetOrAdd(nodeId, _ => factory());
         }
 
-        internal void Emit(string nodeId, string nodeType, string eventType, BtNodeStatus? status = null, string message = "")
+        internal void Emit(string nodeId, string nodeName, string nodeType, string eventType, BtNodeStatus? status = null, string message = "")
         {
-            Trace?.Invoke(this, new BtTraceEventArgs(DateTime.UtcNow, nodeId, nodeType, eventType, status, message ?? ""));
+            Trace?.Invoke(this, new BtTraceEventArgs(DateTime.UtcNow, nodeId, nodeName, nodeType, eventType, status, message ?? ""));
         }
     }
 

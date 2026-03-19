@@ -42,31 +42,33 @@ namespace AutomationTemplate._5_Utility.BtRuntime
                 switch (def.Type)
                 {
                     case "Sequence":
-                        node = new SequenceNode(def.Id, def.Children.Select(BuildNode).ToList());
+                        node = new SequenceNode(def.Id, def.Name ?? def.Id, def.Children.Select(BuildNode).ToList());
                         break;
                     case "Selector":
-                        node = new SelectorNode(def.Id, def.Children.Select(BuildNode).ToList());
+                        node = new SelectorNode(def.Id, def.Name ?? def.Id, def.Children.Select(BuildNode).ToList());
                         break;
                     case "Decorator.Timeout":
                         node = new TimeoutDecoratorNode(
                             def.Id,
+                            def.Name ?? def.Id,
                             def.Children.Count == 1 ? BuildNode(def.Children[0]) : throw new InvalidOperationException("Timeout requires exactly 1 child."),
                             TimeSpan.FromMilliseconds(GetRequiredInt(def, "timeoutMs")));
                         break;
                     case "Action.Delay":
-                        node = new DelayNode(def.Id, TimeSpan.FromMilliseconds(GetRequiredInt(def, "delayMs")));
+                        node = new DelayNode(def.Id, def.Name ?? def.Id, TimeSpan.FromMilliseconds(GetRequiredInt(def, "delayMs")));
                         break;
                     case "Condition.AlwaysTrue":
-                        node = new AlwaysTrueNode(def.Id);
+                        node = new AlwaysTrueNode(def.Id, def.Name ?? def.Id);
                         break;
                     case "Condition.AlwaysFalse":
-                        node = new AlwaysFalseNode(def.Id);
+                        node = new AlwaysFalseNode(def.Id, def.Name ?? def.Id);
                         break;
 
                     // Legacy handler unit actions (MHandler)
                     case "Unit.AxisMoveAbsolute":
                         node = new HandlerAxisMoveAbsoluteNode(
                             def.Id,
+                            def.Name ?? def.Id,
                             GetRequiredString(def, "unit"),
                             GetRequiredString(def, "axis"),
                             GetRequiredToken(def, "positionIdx"));
@@ -74,8 +76,23 @@ namespace AutomationTemplate._5_Utility.BtRuntime
                     case "Unit.MoveXYToPosition":
                         node = new HandlerMoveXYToPositionNode(
                             def.Id,
+                            def.Name ?? def.Id,
                             GetRequiredString(def, "unit"),
                             GetRequiredToken(def, "positionIdx"));
+                        break;
+                    case "Unit.CylinderForward":
+                        node = new HandlerCylinderForwardNode(
+                            def.Id,
+                            def.Name ?? def.Id,
+                            GetRequiredString(def, "unit"),
+                            GetRequiredToken(def, "cylinder"));
+                        break;
+                    case "Unit.CylinderBackward":
+                        node = new HandlerCylinderBackwardNode(
+                            def.Id,
+                            def.Name ?? def.Id,
+                            GetRequiredString(def, "unit"),
+                            GetRequiredToken(def, "cylinder"));
                         break;
 
                     default:
@@ -106,10 +123,7 @@ namespace AutomationTemplate._5_Utility.BtRuntime
 
         public async Task<BtNodeStatus> TickOnceAsync(BtContext context)
         {
-            context.Emit(Root.Id, Root.Type, "tick");
-            var status = await Root.TickAsync(context).ConfigureAwait(false);
-            context.Emit(Root.Id, Root.Type, "tickResult", status);
-            return status;
+            return await Root.TickAsync(context).ConfigureAwait(false);
         }
 
         private static string GetRequiredString(BtDefinition.Node node, string name)
